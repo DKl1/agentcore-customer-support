@@ -1,0 +1,64 @@
+[
+  {
+    "name": "get_order_status",
+    "description": "Look up the status, shipping state and delay reason of ONE order that belongs to the authenticated customer. Use this for questions such as 'where is my order', 'why is order 123 delayed', 'when will it arrive'. Read-only; never changes anything.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "description": "Customer identifier, e.g. CUST-1001. Filled in automatically from the authenticated session."
+        },
+        "order_id": {
+          "type": "string",
+          "description": "Order identifier exactly as the customer gave it, e.g. 123."
+        }
+      },
+      "required": ["customer_id", "order_id"]
+    }
+  },
+  {
+    "name": "get_customer",
+    "description": "Retrieve the profile of the authenticated customer: name, loyalty tier, masked contact details and the list of their order ids. Read-only; never changes anything.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "description": "Customer identifier, e.g. CUST-1001. Filled in automatically from the authenticated session."
+        }
+      },
+      "required": ["customer_id"]
+    }
+  },
+  {
+    "name": "refund_customer",
+    "description": "Issue a monetary refund for an order of the authenticated customer. ONLY call this when the customer explicitly asks for a refund and has named the order and the amount. Money-moving and irreversible. Amount is an integer number of US cents (e.g. $12.50 -> 1250, $100 -> 10000).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "customer_id": {
+          "type": "string",
+          "description": "Customer identifier, e.g. CUST-1001. Filled in automatically from the authenticated session."
+        },
+        "order_id": {
+          "type": "string",
+          "description": "Order to refund."
+        },
+        "amount_cents": {
+          "type": "integer",
+          "description": "Refund amount in US cents. $100.00 = 10000."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Short reason for the refund, as stated by the customer."
+        },
+        "idempotency_key": {
+          "type": "string",
+          "description": "Idempotency key for this refund operation. Filled in automatically by the platform."
+        }
+      },
+      "required": ["customer_id", "order_id", "amount_cents", "reason", "idempotency_key"]
+    }
+  }
+]
