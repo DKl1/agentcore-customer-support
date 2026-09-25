@@ -1,0 +1,17 @@
+{
+  "app": "python app.py",
+  "watch": {
+    "include": ["**"],
+    "exclude": ["README.md", "cdk*.json", "**/__pycache__", "cdk.out"]
+  },
+  "context": {
+    "stage": "dev",
+    "modelId": "us.anthropic.claude-opus-5",
+    "maxRefundCents": 100000,
+    "enableFaultInjection": true,
+    "enableGuardrail": true,
+    "@aws-cdk/aws-iam:minimizePolicies": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/aws-lambda:recognizeLayerVersion": true
+  }
+}
