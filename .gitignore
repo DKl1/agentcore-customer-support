@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+
+# CDK
+infra/cdk.out/
+cdk.context.json
+
+# Deployment outputs (contain ARNs / URLs of your account)
+.deploy/
+
+# Evidence runs are committed deliberately, raw dumps are not
+docs/evidence/raw/
+
+# Secrets — never commit
+.env
+.env.*
+*.pem
+*.key
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

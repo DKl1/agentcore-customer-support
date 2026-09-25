@@ -1,0 +1,4 @@
+# Normalise line endings in the repository; Makefile and shell tooling need LF.
+* text=auto eol=lf
+*.png binary
+*.jpg binary

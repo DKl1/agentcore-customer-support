@@ -1,0 +1,30 @@
+[project]
+name = "agentcore-customer-support"
+version = "1.0.0"
+description = "Production-like Customer Support Agent on Amazon Bedrock AgentCore (Runtime, Gateway, Memory, Identity, Policy) with Strands."
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src/agent", "src/tools", "client", "."]
+asyncio_mode = "auto"
+markers = [
+    "e2e: end-to-end scenarios against a deployed stack (require E2E=1 and .deploy/outputs.json)",
+]
+addopts = "-ra -m 'not e2e'"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF"]
+ignore = ["S101", "E501"]  # asserts are fine; line length is owned by `ruff format`
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = true

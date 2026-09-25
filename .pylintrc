@@ -1,0 +1,16 @@
+# Ruff is the linter of record (see pyproject.toml); keep pylint (IDE) consistent with it.
+[FORMAT]
+max-line-length=110
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
+    too-few-public-methods,
+    too-many-arguments,
+    too-many-positional-arguments,
+    too-many-instance-attributes,
+    import-error,
+    broad-exception-caught,
+    unused-argument
