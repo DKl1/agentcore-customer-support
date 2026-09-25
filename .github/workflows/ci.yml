@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Lint, types and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      JSII_SILENCE_WARNING_UNTESTED_NODE_VERSION: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-dev.txt
+            src/agent/requirements.txt
+            infra/requirements.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt -r src/agent/requirements.txt -r infra/requirements.txt
+
+      - name: Ruff lint
+        run: ruff check src client scripts tests infra
+
+      - name: Ruff format
+        run: ruff format --check src client scripts tests infra
+
+      - name: Mypy
+        run: mypy src/agent/support_agent src/tools/support_tools
+
+      - name: Unit tests (tools, agent, Cedar policies, CDK assertions)
+        run: pytest
