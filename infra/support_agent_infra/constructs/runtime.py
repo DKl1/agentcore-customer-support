@@ -30,7 +30,7 @@ MAX_SESSION_LIFETIME_SECONDS = 8 * 3600
 
 
 def _foundation_model_name(model_id: str) -> str:
-    """``us.anthropic.claude-opus-5`` -> ``anthropic.claude-opus-5`` (strip the geo prefix)."""
+    """``us.anthropic.claude-sonnet-4-6`` -> ``anthropic.claude-sonnet-4-6`` (strip the geo prefix)."""
     parts = model_id.split(".")
     return ".".join(parts[1:]) if parts[0] in {"us", "eu", "apac", "global", "jp", "au"} else model_id
 

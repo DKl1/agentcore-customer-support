@@ -85,7 +85,7 @@ make e2e                     # all required scenarios → docs/evidence/runs/
 make evidence                # saved queries + policy state → docs/evidence/
 ```
 
-The model is configurable: `-c modelId=...` (default `us.anthropic.claude-opus-5` in `infra/cdk.json`; check
+The model is configurable: `-c modelId=...` (default `us.anthropic.claude-sonnet-4-6` in `infra/cdk.json`; check
 the inference profile id in your Bedrock console). To see the Cedar path for direct prompt injection, deploy with
 `-c enableGuardrail=false`. Otherwise the guardrail may block the prompt before the model ever calls the tool.
 Both outcomes are safe, and the direct-probe test always exercises the policy.

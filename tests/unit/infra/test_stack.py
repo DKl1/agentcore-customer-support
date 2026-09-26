@@ -26,7 +26,7 @@ def template() -> Template:
     app = cdk.App(
         context={
             "stage": "dev",
-            "modelId": "us.anthropic.claude-opus-5",
+            "modelId": "us.anthropic.claude-sonnet-4-6",
             "maxRefundCents": 100000,
             "enableFaultInjection": True,
             "enableGuardrail": True,
