@@ -39,7 +39,7 @@ when {
 // later by mistake (forbid overrides permit).
 @id("forbid-refund-over-limit")
 forbid(
-  principal,
+  principal is AgentCore::OAuthUser,
   action == AgentCore::Action::"{{TARGET}}___refund_customer",
   resource == AgentCore::Gateway::"{{GATEWAY_ARN}}"
 )

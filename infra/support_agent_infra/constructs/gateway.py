@@ -84,9 +84,14 @@ class ToolGateway(Construct):
                     "bedrock-agentcore:PartiallyAuthorizeActions",
                     "bedrock-agentcore:GetPolicyEngine",
                 ],
+                # Authorization is evaluated against both the engine and the gateway being protected.
+                # The gateway ARN is matched by name prefix: referencing its own ARN here would create
+                # a circular dependency (the gateway needs this role first).
                 resources=[
                     f"arn:aws:bedrock-agentcore:{stack.region}:{stack.account}"
-                    f":policy-engine/{config.policy_engine_name}*"
+                    f":policy-engine/{config.policy_engine_name}*",
+                    f"arn:aws:bedrock-agentcore:{stack.region}:{stack.account}"
+                    f":gateway/{config.resource_prefix}-gateway-*",
                 ],
             )
         )

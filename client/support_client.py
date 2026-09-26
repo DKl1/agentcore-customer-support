@@ -82,6 +82,9 @@ class SupportAgentClient:
         response = self._client.invoke_agent_runtime(
             agentRuntimeArn=self._runtime_arn,
             runtimeSessionId=session_id,
+            # With SigV4 inbound auth the Runtime issues the agent's workload access token (needed by
+            # AgentCore Identity) only for a named end user; requires bedrock-agentcore:InvokeAgentRuntimeForUser.
+            runtimeUserId=customer_id,
             qualifier="DEFAULT",
             contentType="application/json",
             accept="application/json",
