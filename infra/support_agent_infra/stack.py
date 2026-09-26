@@ -37,6 +37,8 @@ class CustomerSupportAgentStack(cdk.Stack):
             tools_log_group=tools.log_group,
             tools_function_name=tools.function.function_name,
         )
+        # The Runtime creates its log group on creation; metric filters and queries must come after it.
+        observability.node.add_dependency(runtime.runtime)
 
         outputs = {
             "Stage": config.stage,

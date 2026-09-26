@@ -107,13 +107,12 @@ class Observability(Construct):
     ) -> None:
         super().__init__(scope, construct_id)
 
-        # Pre-create the Runtime log group so retention is managed and metric filters can attach.
-        self.agent_log_group = logs.LogGroup(
-            self,
-            "RuntimeLogGroup",
-            log_group_name=runtime_log_group_name,
-            retention=logs.RetentionDays.ONE_MONTH,
-            removal_policy=config.removal_policy,
+        # AgentCore Runtime creates its own log group when the Runtime is created, so it is referenced,
+        # not owned (owning it fails with AlreadyExists). The stack makes this construct depend on the
+        # Runtime so the group exists before metric filters attach; retention is set by
+        # scripts/configure_runtime.py.
+        self.agent_log_group = logs.LogGroup.from_log_group_name(
+            self, "RuntimeLogGroup", runtime_log_group_name
         )
         self.alarm_topic = sns.Topic(self, "AlarmTopic", topic_name=f"{config.resource_prefix}-alarms")
 
